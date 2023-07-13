@@ -26,8 +26,8 @@ namespace Application.Queries
 
 			public async Task<List<UserDto>> Handle(GetAllAdminsQuery request, CancellationToken cancellationToken)
 			{
-				var admins = await _dbContext.Users.
-									Where(x=>x.Roles.Any(r=>r.Id == 1))
+				var admins = await _dbContext.Users
+									.Where(x=>x.Roles.Any(r=>r.Id == 1))
 									.ToListAsync();
 
 				return _mapper.Map<List<UserDto>>(admins);

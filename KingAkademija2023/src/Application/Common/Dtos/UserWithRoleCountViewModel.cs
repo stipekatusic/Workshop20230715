@@ -2,7 +2,7 @@
 
 namespace Application.Common.Dtos
 {
-	public class UserWithRoleCountModel
+	public class UserWithRoleCountViewModel
 	{
 		public User User { get; set; }
 		public int Count { get; set; }

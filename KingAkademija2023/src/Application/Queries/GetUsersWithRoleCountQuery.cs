@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Application.Queries
 {
-	public class GetUsersWithRoleCountQuery : IRequest<List<UserWithRoleCountModel>>
+	public class GetUsersWithRoleCountQuery : IRequest<List<UserWithRoleCountViewModel>>
 	{
-		public class GetUsersWithRoleCountQueryHandler : IRequestHandler<GetUsersWithRoleCountQuery, List<UserWithRoleCountModel>>
+		public class GetUsersWithRoleCountQueryHandler : IRequestHandler<GetUsersWithRoleCountQuery, List<UserWithRoleCountViewModel>>
 		{
 			private readonly IAcademyDbContext _dbContext;
 
@@ -20,11 +20,11 @@ namespace Application.Queries
 				_dbContext= dbContext;
 			}
 
-			public async Task<List<UserWithRoleCountModel>> Handle(GetUsersWithRoleCountQuery request, CancellationToken cancellationToken)
+			public async Task<List<UserWithRoleCountViewModel>> Handle(GetUsersWithRoleCountQuery request, CancellationToken cancellationToken)
 			{
 				return await _dbContext.Users
 						.Include(r=>r.Roles)
-						.Select(x => new UserWithRoleCountModel
+						.Select(x => new UserWithRoleCountViewModel
 						{
 							User = x,
 							Count = x.Roles.Count()
