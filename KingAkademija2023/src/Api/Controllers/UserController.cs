@@ -26,5 +26,11 @@ namespace Api.Controllers
 			return Ok(await Mediator.Send(new GetAllAdminsQuery() { }));
 		}
 
+		[HttpGet("get-users-role-count")]
+		public async Task<IActionResult> GetUsersWithRoleCount()
+		{
+			return Ok(await Mediator.Send(new GetUsersWithRoleCountQuery() { }));
+		}
+
 	}
 }
