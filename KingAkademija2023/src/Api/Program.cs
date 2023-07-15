@@ -1,5 +1,9 @@
 using System.Reflection;
+using System.Text.Json.Serialization;
+using Api.Common.Validation;
 using Application;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,10 +14,23 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Get
 builder.Services.AddApplication();
 builder.Services.AddInfractructure(builder.Configuration);
 
+
 builder.Services.AddControllers();
+
+//Register validators
+builder.Services.AddValidatorsFromAssemblyContaining<TestDtoValidator>();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+	options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+	options.JsonSerializerOptions.WriteIndented = true;
+});
 
 var app = builder.Build();
 
